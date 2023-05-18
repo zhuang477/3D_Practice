@@ -7,25 +7,40 @@ public class playerController : MonoBehaviour
     public CharacterController controller;
     public GameObject playerModel;
 
-    [HideInInspector]public bool Moveinput =false;
-    [HideInInspector]public Vector3 direction;
+    public Transform cam; // Reference to the main camera
 
-    public float defaultSpeed =6f;
+    [HideInInspector] public bool Moveinput = false;
+    [HideInInspector] public Vector3 moveDirection;
+
+    public float defaultSpeed = 6f;
 
     // Update is called once per frame
     void Update()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-        direction =new Vector3(horizontal,0f,vertical).normalized;
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if(direction.magnitude >=0.1f){
-            controller.Move(direction* defaultSpeed * Time.deltaTime);
+        if(direction.magnitude >= 0.1f){
+            // We get the camera's direction, remove any vertical movement and normalize it
+            Vector3 cameraForward = cam.forward;
+            cameraForward.y = 0;
+            cameraForward.Normalize();
+            
+            // We then get the right vector from the camera's transform
+            Vector3 cameraRight = cam.right;
+
+            // We then apply the camera's forward and right vectors to our input
+            moveDirection = cameraForward * vertical + cameraRight * horizontal;
+            moveDirection.Normalize();
+            
+            // Apply the movement to the controller
+            controller.Move(moveDirection * defaultSpeed * Time.deltaTime);
             playerModel.transform.position = controller.transform.position;
-            Moveinput =true;
+            Moveinput = true;
         }
         else{
-            Moveinput =false;
+            Moveinput = false;
         }
     }
 }

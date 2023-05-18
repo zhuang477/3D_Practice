@@ -8,8 +8,6 @@ public class playerAnimation : MonoBehaviour
     public GameObject playerModel;
     public Animator animator;
 
-    [SerializeField] Vector3 direction;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,18 +17,21 @@ public class playerAnimation : MonoBehaviour
 
     void walk(){
         if(playerController.Moveinput ==true){
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            playerModel.transform.rotation = rotation;
+            Quaternion rotation = Quaternion.LookRotation(playerController.moveDirection);
+            float rotationSpeed = 15f;
+            playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+
             animator.SetBool("IsWalking", true);
+            animator.applyRootMotion =false;
         }else{
             animator.SetBool("IsWalking", false);
+            animator.applyRootMotion =true;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        direction =playerController.direction;
         walk();    
 
     }
