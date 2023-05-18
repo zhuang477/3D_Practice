@@ -55,10 +55,19 @@ public class playerAnimation : MonoBehaviour
         }
     }
 
+    void Dodge(){
+        if(Input.GetKeyDown(KeyCode.Space)){
+            Quaternion rotation = Quaternion.LookRotation(playerController_.moveDirection);
+            float rotationSpeed = 10f;
+            playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+            animator.SetTrigger("Dodge");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         walk_and_run();    
-
+        Dodge();
     }
 }
