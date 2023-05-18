@@ -64,6 +64,7 @@ public class playerAnimation : MonoBehaviour
         }
     }
 
+
     // Update is called once per frame
     void Update()
     {
