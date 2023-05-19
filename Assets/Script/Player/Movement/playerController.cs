@@ -7,36 +7,33 @@ public class playerController : MonoBehaviour
     public CharacterController controller;
     public GameObject playerModel;
 
+    public float turnSmoothTime =0.1f;
+    float turnSmoothVelocity;
+
+    [HideInInspector]public float horizontal;
+    [HideInInspector]public float vertical;
+
     public Transform cam; // Reference to the main camera
 
     [HideInInspector] public bool Moveinput = false;
     [HideInInspector] public Vector3 moveDirection;
+    
 
     public float defaultSpeed = 6f;
 
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
+        
         if(direction.magnitude >= 0.1f){
-            // We get the camera's direction, remove any vertical movement and normalize it
-            Vector3 cameraForward = cam.forward;
-            cameraForward.y = 0;
-            cameraForward.Normalize();
-            
-            // We then get the right vector from the camera's transform
-            Vector3 cameraRight = cam.right;
-
-            // We then apply the camera's forward and right vectors to our input
-            moveDirection = cameraForward * vertical + cameraRight * horizontal;
-            moveDirection.Normalize();
-            
-            // Apply the movement to the controller
-            controller.Move(moveDirection * defaultSpeed * Time.deltaTime);
-            playerModel.transform.position = controller.transform.position;
+            float targetAngle =Mathf.Atan2(direction.x ,direction.z) *Mathf.Rad2Deg +cam.eulerAngles.y;
+            float angle =Mathf.SmoothDampAngle(transform.eulerAngles.y,targetAngle,ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation =Quaternion.Euler(0f, angle, 0f);
+            moveDirection =Quaternion.Euler(0f, targetAngle, 0f) *Vector3.forward;
+            controller.Move(moveDirection.normalized*defaultSpeed*Time.deltaTime);
             Moveinput = true;
         }
         else{

@@ -19,7 +19,7 @@ public class playerAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator =GameObject.Find("Model").GetComponent<Animator>();
+        animator =GameObject.Find("Paladin WProp J Nordstrom").GetComponent<Animator>();
         playerController_ =GameObject.FindObjectOfType<playerController>();
     }
 
@@ -67,7 +67,7 @@ public class playerAnimation : MonoBehaviour
     void Dodge(){
         if(Input.GetKeyDown(KeyCode.Space)){
             Quaternion rotation = Quaternion.LookRotation(playerController_.moveDirection);
-            float rotationSpeed = 0.1f;
+            float rotationSpeed = 10f;
             playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
             animator.SetTrigger("Dodge");
         }
@@ -97,14 +97,18 @@ public class playerAnimation : MonoBehaviour
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3")){
             playerController_.defaultSpeed =0f;
         }
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Roll") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
+
             playerController_.defaultSpeed =6f;
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Sprint")){
             playerController_.defaultSpeed =12f;
         }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Roll")){
+            playerController_.defaultSpeed =0f;
+        }
     }
-
+    
     //The tool that check which animation is playing. Put it to Update() to use if needed.
     void CurrentAnimationClip()
     {
@@ -129,7 +133,7 @@ public class playerAnimation : MonoBehaviour
         Dodge();
         Attack();
         SpeedManager();
-        Debug.Log(playerController_.defaultSpeed);
+        //Debug.Log(playerController_.defaultSpeed);
         //CurrentAnimationClip();
     }
 }
