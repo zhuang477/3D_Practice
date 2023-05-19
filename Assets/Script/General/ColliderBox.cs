@@ -7,6 +7,8 @@ public class ColliderBox : MonoBehaviour
     public Collider[] head;
     public Collider[] body;
     public Collider[] leg;
+
+    public Collider Weapon;
     // Start is called before the first frame update
     void Start()
     {

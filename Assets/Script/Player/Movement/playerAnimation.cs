@@ -8,6 +8,14 @@ public class playerAnimation : MonoBehaviour
     public GameObject playerModel;
     public Animator animator;
 
+    public enum AttackPlaceHolder{
+        head,
+        body,
+        leg
+    }
+
+    public AttackPlaceHolder AimPart;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +41,6 @@ public class playerAnimation : MonoBehaviour
             playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
             if (Input.GetKeyDown(KeyCode.LeftShift)){
-                playerController_.defaultSpeed =9f;
                 animator.SetBool("IsRunning", true);
             }
 
@@ -53,6 +60,8 @@ public class playerAnimation : MonoBehaviour
 
             animator.applyRootMotion =true;
         }
+
+        
     }
 
     void Dodge(){
@@ -64,11 +73,62 @@ public class playerAnimation : MonoBehaviour
         }
     }
 
+    void Attack(){
+        if(Input.GetKeyDown(KeyCode.Mouse0)){
+            if(AimPart ==AttackPlaceHolder.head){
+                animator.SetTrigger("AttackHead");
+            }
+            if(AimPart ==AttackPlaceHolder.body){
+                animator.SetTrigger("AttackBody");
+            }
+            if(AimPart ==AttackPlaceHolder.leg){
+                animator.SetTrigger("AttackLeg");
+            }
+        }
+
+    }
+
+    //Ok, since the changes of speed is more complex to handle, thats why the manager is being build.
+    //make every speed change in HERE!
+    void SpeedManager(){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
+            playerController_.defaultSpeed =0f;
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3")){
+            playerController_.defaultSpeed =0f;
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Roll") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
+            playerController_.defaultSpeed =6f;
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Sprint")){
+            playerController_.defaultSpeed =12f;
+        }
+    }
+
+    //The tool that check which animation is playing. Put it to Update() to use if needed.
+    void CurrentAnimationClip()
+    {
+        // Get the current AnimatorClipInfo.
+        AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+
+        if (clipInfo.Length > 0)
+        {
+            // Print the name of the currently playing clip.
+            Debug.Log("Currently playing: " + clipInfo[0].clip.name);
+        }
+        else
+        {
+            Debug.Log("No animation is playing.");
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
         walk_and_run();    
         Dodge();
+        Attack();
+        SpeedManager();
+        //CurrentAnimationClip();
     }
 }
