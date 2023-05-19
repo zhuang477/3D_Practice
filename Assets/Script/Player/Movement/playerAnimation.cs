@@ -19,7 +19,7 @@ public class playerAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator =GameObject.Find("Player").GetComponent<Animator>();
+        animator =GameObject.Find("Model").GetComponent<Animator>();
         playerController_ =GameObject.FindObjectOfType<playerController>();
     }
 
@@ -30,7 +30,7 @@ public class playerAnimation : MonoBehaviour
             if(playerController_.Moveinput ==true){
                 playerController_.defaultSpeed =9f;
                 animator.SetBool("IsRunning", true);
-                animator.applyRootMotion =false;
+                //animator.applyRootMotion =false;
             }
         }
 
@@ -53,12 +53,12 @@ public class playerAnimation : MonoBehaviour
             else{
                 animator.SetBool("IsWalking", true);
             }
-            animator.applyRootMotion =false;
+            //animator.applyRootMotion =false;
         }else{
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsRunning", false);
 
-            animator.applyRootMotion =true;
+            //animator.applyRootMotion =true;
         }
 
         
@@ -67,7 +67,7 @@ public class playerAnimation : MonoBehaviour
     void Dodge(){
         if(Input.GetKeyDown(KeyCode.Space)){
             Quaternion rotation = Quaternion.LookRotation(playerController_.moveDirection);
-            float rotationSpeed = 10f;
+            float rotationSpeed = 0.1f;
             playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
             animator.SetTrigger("Dodge");
         }
@@ -129,6 +129,7 @@ public class playerAnimation : MonoBehaviour
         Dodge();
         Attack();
         SpeedManager();
+        Debug.Log(playerController_.defaultSpeed);
         //CurrentAnimationClip();
     }
 }
