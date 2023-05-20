@@ -8,6 +8,8 @@ public class playerAnimation : MonoBehaviour
     public GameObject playerModel;
     public Animator animator;
 
+    public ComboManager combo;
+
     public enum AttackPlaceHolder{
         head,
         body,
@@ -73,19 +75,40 @@ public class playerAnimation : MonoBehaviour
         }
     }
 
-    void Attack(){
-        if(Input.GetKeyDown(KeyCode.Mouse0)){
+    private int comboCounter =0;
+    private float lastComboTime =0f;
+    private float comboResetTime =2f;
+    
+    //The combo system is a little complex, 
+    void AttackManager(){
+        if(Time.time -lastComboTime >comboResetTime){
             if(AimPart ==AttackPlaceHolder.head){
-                animator.SetTrigger("AttackHead");
-            }
-            if(AimPart ==AttackPlaceHolder.body){
-                animator.SetTrigger("AttackBody");
-            }
-            if(AimPart ==AttackPlaceHolder.leg){
-                animator.SetTrigger("AttackLeg");
+                comboCounter =0;
             }
         }
+        if(Input.GetKeyDown(KeyCode.Mouse0)){
+            PerformAttack();
+        }
+    }
 
+    void PerformAttack(){
+        if(comboCounter >2){
+            comboCounter =0;
+
+        }
+        lastComboTime = Time.time;
+        if(combo.IsAnimationDone){
+            comboCounter++;
+            animator.SetTrigger("Attack " + comboCounter);
+        }
+
+        //The combat system I wrote is a complete mess, So the reset Trigger is use to fix the animation trigger error
+        //where the connect between AttackHead animations,it seems the animation will stay triggered even the current state is stance.
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
+            animator.ResetTrigger("Attack 1");
+            animator.ResetTrigger("Attack 2");
+            animator.ResetTrigger("Attack 3");
+        }
     }
 
     //Ok, since the changes of speed is more complex to handle, thats why the manager is being build.
@@ -131,8 +154,9 @@ public class playerAnimation : MonoBehaviour
     {
         walk_and_run();    
         Dodge();
-        Attack();
+        //Attack();
         SpeedManager();
+        AttackManager();
         //Debug.Log(playerController_.defaultSpeed);
         //CurrentAnimationClip();
     }
