@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class playerAnimation : MonoBehaviour
 {
@@ -18,12 +19,101 @@ public class playerAnimation : MonoBehaviour
 
     public AttackPlaceHolder AimPart;
 
+    //This is the new input system, this will use into dodge and attack animations.
+    //The Dodge, Attack and Block.
+    //------------------------------------------------------------------------------------------------//
+    public New_PlayerController inputActions;
+    
+
+    private void OnEnable(){
+        inputActions.Player.Enable();
+    }
+
+    private void OnDisable(){
+        inputActions.Player.Disable();
+    }
+
+    void Awake(){
+        inputActions =new New_PlayerController();
+        inputActions.Player.Roll.performed += ctx => Dodge();
+
+    }
+
+    void Dodge(){
+        /**
+        if(Input.GetKeyDown(KeyCode.Space)){
+            Quaternion rotation = Quaternion.LookRotation(playerController_.moveDirection);
+            float rotationSpeed = 10f;
+            playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+            animator.SetTrigger("Dodge");
+        }**/
+        animator.SetTrigger("Dodge");
+    }
+
+    private int comboCounter =0;
+    private float lastComboTime =0f;
+    private float comboResetTime =1f;
+    
+    //The combo system is a little complex, 
+    void AttackManager(){
+        if(Time.time -lastComboTime >comboResetTime){
+            comboCounter =0;
+            animator.ResetTrigger("Attack 2");
+            animator.ResetTrigger("Attack 3");
+        }
+        if(Input.GetKeyDown(KeyCode.Mouse0)){
+            PerformAttack();
+            combo.IsInputAllowed =false;
+        }
+    }
+
+    void PerformAttack(){
+        if(comboCounter >2){
+            comboCounter =0;
+
+        }
+        lastComboTime = Time.time;
+            comboCounter++;
+            animator.SetTrigger("Attack " + comboCounter);
+    }
+
+    void AimPartManager(){
+        if(AimPart ==AttackPlaceHolder.head){
+            animator.SetBool("AimHead",true);
+            animator.SetBool("AimBody",false);
+            animator.SetBool("AimLeg",false);
+        }
+        if(AimPart ==AttackPlaceHolder.body){
+            animator.SetBool("AimHead",false);
+            animator.SetBool("AimBody",true);
+            animator.SetBool("AimLeg",false);
+        }
+        if(AimPart ==AttackPlaceHolder.leg){
+            animator.SetBool("AimHead",false);
+            animator.SetBool("AimBody",false);
+            animator.SetBool("AimLeg",true);
+        }
+    }
+
+    void InputLocker(){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Roll")){
+            playerController_.InputActions.Player.Disable();
+        }else{
+            playerController_.InputActions.Player.Enable();
+        }
+        //playerController_.InputActions.Player.Enable();
+    }
+    //------------------------------------------------------------------------------------------------//
+
+
     // Start is called before the first frame update
     void Start()
     {
         animator =GameObject.Find("Paladin WProp J Nordstrom").GetComponent<Animator>();
         playerController_ =GameObject.FindObjectOfType<playerController>();
     }
+
+
 
     void walk_and_run(){
         //face to the situation when the shift is enable while
@@ -55,59 +145,9 @@ public class playerAnimation : MonoBehaviour
             else{
                 animator.SetBool("IsWalking", true);
             }
-            //animator.applyRootMotion =false;
         }else{
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsRunning", false);
-
-            //animator.applyRootMotion =true;
-        }
-
-        
-    }
-
-    void Dodge(){
-        if(Input.GetKeyDown(KeyCode.Space)){
-            Quaternion rotation = Quaternion.LookRotation(playerController_.moveDirection);
-            float rotationSpeed = 10f;
-            playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-            animator.SetTrigger("Dodge");
-        }
-    }
-
-    private int comboCounter =0;
-    private float lastComboTime =0f;
-    private float comboResetTime =2f;
-    
-    //The combo system is a little complex, 
-    void AttackManager(){
-        if(Time.time -lastComboTime >comboResetTime){
-            if(AimPart ==AttackPlaceHolder.head){
-                comboCounter =0;
-            }
-        }
-        if(Input.GetKeyDown(KeyCode.Mouse0)){
-            PerformAttack();
-        }
-    }
-
-    void PerformAttack(){
-        if(comboCounter >2){
-            comboCounter =0;
-
-        }
-        lastComboTime = Time.time;
-        if(combo.IsAnimationDone){
-            comboCounter++;
-            animator.SetTrigger("Attack " + comboCounter);
-        }
-
-        //The combat system I wrote is a complete mess, So the reset Trigger is use to fix the animation trigger error
-        //where the connect between AttackHead animations,it seems the animation will stay triggered even the current state is stance.
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
-            animator.ResetTrigger("Attack 1");
-            animator.ResetTrigger("Attack 2");
-            animator.ResetTrigger("Attack 3");
         }
     }
 
@@ -115,9 +155,6 @@ public class playerAnimation : MonoBehaviour
     //make every speed change in HERE!
     void SpeedManager(){
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
-            playerController_.defaultSpeed =0f;
-        }
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3")){
             playerController_.defaultSpeed =0f;
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
@@ -128,6 +165,15 @@ public class playerAnimation : MonoBehaviour
             playerController_.defaultSpeed =12f;
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Roll")){
+            playerController_.defaultSpeed =0f;
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3")){
+            playerController_.defaultSpeed =0f;
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 4") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 5") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 6")){
+            playerController_.defaultSpeed =0f;
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 7") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 8") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 9")){
             playerController_.defaultSpeed =0f;
         }
     }
@@ -152,11 +198,12 @@ public class playerAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        walk_and_run();    
-        Dodge();
-        //Attack();
+        walk_and_run();
         SpeedManager();
         AttackManager();
+        AimPartManager();
+
+        InputLocker();
         //Debug.Log(playerController_.defaultSpeed);
         //CurrentAnimationClip();
     }
