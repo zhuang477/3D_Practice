@@ -48,7 +48,7 @@ public class playerAnimation : MonoBehaviour
 
     void PerformAttack(){
         //New idea, use combo transition to wait for player's decision, if player will not attack, then back to stance.
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
             animator.SetTrigger("Attack 1");
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition")){

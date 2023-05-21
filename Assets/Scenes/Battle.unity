@@ -2321,7 +2321,7 @@ MonoBehaviour:
   playerModel: {fileID: 919132147892847643}
   animator: {fileID: 5866666019950822619}
   combo: {fileID: 5866666019950822620}
-  AimPart: 2
+  AimPart: 0
 --- !u!1 &1253087414921044
 GameObject:
   m_ObjectHideFlags: 0
