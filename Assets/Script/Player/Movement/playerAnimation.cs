@@ -23,6 +23,10 @@ public class playerAnimation : MonoBehaviour
     //The Dodge, Attack and Block.
     //------------------------------------------------------------------------------------------------//
     public New_PlayerController inputActions;
+
+    private int comboCounter =0;
+    private float lastComboTime =0f;
+    private float comboResetTime =1f;
     
 
     private void OnEnable(){
@@ -37,7 +41,37 @@ public class playerAnimation : MonoBehaviour
         inputActions =new New_PlayerController();
         inputActions.Player.Roll.performed += ctx => Dodge();
 
+        //If detect mouse event, then jump to attack event handler.
+        inputActions.Player.Attack.performed += ctx => {
+            PerformAttack();};
     }
+
+    void PerformAttack(){
+        //New idea, use combo transition to wait for player's decision, if player will not attack, then back to stance.
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
+            animator.SetTrigger("Attack 1");
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition")){
+            animator.SetTrigger("Attack 2");
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition 0")){
+            animator.SetTrigger("Attack 3");
+        }
+    }
+
+
+    void AttackOversee(){
+        if(!combo.IsAnimationDone){
+            animator.SetBool("AnimationIsDone",false);
+            inputActions.Player.Attack.Disable();
+        }
+        if(combo.IsAnimationDone){
+            animator.SetBool("AnimationIsDone",true);
+            inputActions.Player.Attack.Enable();
+        }
+    }
+
+
 
     void Dodge(){
         /**
@@ -48,33 +82,6 @@ public class playerAnimation : MonoBehaviour
             animator.SetTrigger("Dodge");
         }**/
         animator.SetTrigger("Dodge");
-    }
-
-    private int comboCounter =0;
-    private float lastComboTime =0f;
-    private float comboResetTime =1f;
-    
-    //The combo system is a little complex, 
-    void AttackManager(){
-        if(Time.time -lastComboTime >comboResetTime){
-            comboCounter =0;
-            animator.ResetTrigger("Attack 2");
-            animator.ResetTrigger("Attack 3");
-        }
-        if(Input.GetKeyDown(KeyCode.Mouse0)){
-            PerformAttack();
-            combo.IsInputAllowed =false;
-        }
-    }
-
-    void PerformAttack(){
-        if(comboCounter >2){
-            comboCounter =0;
-
-        }
-        lastComboTime = Time.time;
-            comboCounter++;
-            animator.SetTrigger("Attack " + comboCounter);
     }
 
     void AimPartManager(){
@@ -101,8 +108,9 @@ public class playerAnimation : MonoBehaviour
         }else{
             playerController_.InputActions.Player.Enable();
         }
-        //playerController_.InputActions.Player.Enable();
     }
+
+
     //------------------------------------------------------------------------------------------------//
 
 
@@ -155,6 +163,8 @@ public class playerAnimation : MonoBehaviour
     //make every speed change in HERE!
     void SpeedManager(){
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
+            animator.ResetTrigger("Attack 2");
+            animator.ResetTrigger("Attack 3");
             playerController_.defaultSpeed =0f;
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
@@ -200,10 +210,10 @@ public class playerAnimation : MonoBehaviour
     {
         walk_and_run();
         SpeedManager();
-        AttackManager();
         AimPartManager();
-
         InputLocker();
+        //ResetTimer();
+        AttackOversee();
         //Debug.Log(playerController_.defaultSpeed);
         //CurrentAnimationClip();
     }

@@ -7,14 +7,14 @@ public class ComboManager : MonoBehaviour
 
     public bool IsAnimationDone =true;
 
-    public bool IsInputAllowed =false;
+    public bool TimesUp =false;
 
     void InputFrameStart(){
-        IsInputAllowed =true;
+        TimesUp =true;
     }
 
     void InputFrameEnd(){
-        IsInputAllowed =false;
+        TimesUp =false;
     }
 
     //I just keep these variables in case I needed.
@@ -26,7 +26,11 @@ public class ComboManager : MonoBehaviour
         IsAnimationDone =true;
     }
 
+    void Start(){
+
+    }
+
     void Update(){
-        //Debug.Log(IsAnimationDone);
+        
     }
 }
