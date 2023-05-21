@@ -24,9 +24,10 @@ public class playerAnimation : MonoBehaviour
     //------------------------------------------------------------------------------------------------//
     public New_PlayerController inputActions;
 
+    /**
     private int comboCounter =0;
     private float lastComboTime =0f;
-    private float comboResetTime =1f;
+    private float comboResetTime =1f;**/
     
 
     private void OnEnable(){
@@ -48,13 +49,16 @@ public class playerAnimation : MonoBehaviour
 
     void PerformAttack(){
         //New idea, use combo transition to wait for player's decision, if player will not attack, then back to stance.
+        //The transition will overlap the whole transition.
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
             animator.SetTrigger("Attack 1");
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition")){
+            //animator.SetBool("AnimationIsDone",true);
             animator.SetTrigger("Attack 2");
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition 0")){
+            //animator.SetBool("AnimationIsDone",true);
             animator.SetTrigger("Attack 3");
         }
     }
@@ -63,11 +67,13 @@ public class playerAnimation : MonoBehaviour
     void AttackOversee(){
         if(!combo.IsAnimationDone){
             animator.SetBool("AnimationIsDone",false);
-            inputActions.Player.Attack.Disable();
+            inputActions.Player.Disable();
+            playerController_.InputActions.Player.Disable();
         }
         if(combo.IsAnimationDone){
             animator.SetBool("AnimationIsDone",true);
-            inputActions.Player.Attack.Enable();
+            inputActions.Player.Enable();
+            playerController_.InputActions.Player.Enable();
         }
     }
 
@@ -101,16 +107,6 @@ public class playerAnimation : MonoBehaviour
             animator.SetBool("AimLeg",true);
         }
     }
-
-    void InputLocker(){
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Roll")){
-            playerController_.InputActions.Player.Disable();
-        }else{
-            playerController_.InputActions.Player.Enable();
-        }
-    }
-
-
     //------------------------------------------------------------------------------------------------//
 
 
@@ -180,12 +176,6 @@ public class playerAnimation : MonoBehaviour
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3")){
             playerController_.defaultSpeed =0f;
         }
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 4") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 5") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 6")){
-            playerController_.defaultSpeed =0f;
-        }
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 7") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 8") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 9")){
-            playerController_.defaultSpeed =0f;
-        }
     }
     
     //The tool that check which animation is playing. Put it to Update() to use if needed.
@@ -211,8 +201,6 @@ public class playerAnimation : MonoBehaviour
         walk_and_run();
         SpeedManager();
         AimPartManager();
-        InputLocker();
-        //ResetTimer();
         AttackOversee();
         //Debug.Log(playerController_.defaultSpeed);
         //CurrentAnimationClip();
