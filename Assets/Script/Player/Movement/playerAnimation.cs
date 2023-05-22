@@ -45,6 +45,9 @@ public class playerAnimation : MonoBehaviour
         //If detect mouse event, then jump to attack event handler.
         inputActions.Player.Attack.performed += ctx => {
             PerformAttack();};
+        
+        inputActions.Player.Block.performed += ctx => animator.SetBool("Block",true);
+        inputActions.Player.Block.canceled += ctx => animator.SetBool("Block",false);
     }
 
     void PerformAttack(){
@@ -63,7 +66,10 @@ public class playerAnimation : MonoBehaviour
         }
     }
 
-
+    //This function is mean to block the input while the animation is playing.
+    //If the function is being disabled, then the roll(Dodge) will be influence by input, which you will see a funny in-place roll.
+    //
+    //if you don't want the animation being affect by input, then add the animation event to the animation(AttackNotDone and AttackDone).
     void AttackOversee(){
         if(!combo.IsAnimationDone){
             animator.SetBool("AnimationIsDone",false);
@@ -76,8 +82,6 @@ public class playerAnimation : MonoBehaviour
             playerController_.InputActions.Player.Enable();
         }
     }
-
-
 
     void Dodge(){
         /**
@@ -116,8 +120,6 @@ public class playerAnimation : MonoBehaviour
         animator =GameObject.Find("Paladin WProp J Nordstrom").GetComponent<Animator>();
         playerController_ =GameObject.FindObjectOfType<playerController>();
     }
-
-
 
     void walk_and_run(){
         //face to the situation when the shift is enable while
@@ -158,12 +160,12 @@ public class playerAnimation : MonoBehaviour
     //Ok, since the changes of speed is more complex to handle, thats why the manager is being build.
     //make every speed change in HERE!
     void SpeedManager(){
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance")){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance") || animator.GetCurrentAnimatorStateInfo(0).IsName("Block_idle")){
             animator.ResetTrigger("Attack 2");
             animator.ResetTrigger("Attack 3");
             playerController_.defaultSpeed =0f;
         }
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Block_Move")){
 
             playerController_.defaultSpeed =6f;
         }
