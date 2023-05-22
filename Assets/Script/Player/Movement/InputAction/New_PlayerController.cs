@@ -71,6 +71,24 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""UpAim"",
+                    ""type"": ""Button"",
+                    ""id"": ""4bd091f8-5ace-4b4d-b858-cba9693edd84"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DownAim"",
+                    ""type"": ""Button"",
+                    ""id"": ""ee8eacc8-f45d-4686-8751-d237b70ccb53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -172,6 +190,28 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""637f666a-8c76-4633-88f5-233c556645f8"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UpAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdc04c76-cbf4-44c3-900f-cdb2f775b8b4"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DownAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -185,6 +225,8 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
         m_Player_Block = m_Player.FindAction("Block", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_UpAim = m_Player.FindAction("UpAim", throwIfNotFound: true);
+        m_Player_DownAim = m_Player.FindAction("DownAim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +293,8 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Block;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_UpAim;
+    private readonly InputAction m_Player_DownAim;
     public struct PlayerActions
     {
         private @New_PlayerController m_Wrapper;
@@ -260,6 +304,8 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
         public InputAction @Block => m_Wrapper.m_Player_Block;
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @UpAim => m_Wrapper.m_Player_UpAim;
+        public InputAction @DownAim => m_Wrapper.m_Player_DownAim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -284,6 +330,12 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @UpAim.started += instance.OnUpAim;
+            @UpAim.performed += instance.OnUpAim;
+            @UpAim.canceled += instance.OnUpAim;
+            @DownAim.started += instance.OnDownAim;
+            @DownAim.performed += instance.OnDownAim;
+            @DownAim.canceled += instance.OnDownAim;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -303,6 +355,12 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @UpAim.started -= instance.OnUpAim;
+            @UpAim.performed -= instance.OnUpAim;
+            @UpAim.canceled -= instance.OnUpAim;
+            @DownAim.started -= instance.OnDownAim;
+            @DownAim.performed -= instance.OnDownAim;
+            @DownAim.canceled -= instance.OnDownAim;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -327,5 +385,7 @@ public partial class @New_PlayerController: IInputActionCollection2, IDisposable
         void OnBlock(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnUpAim(InputAction.CallbackContext context);
+        void OnDownAim(InputAction.CallbackContext context);
     }
 }

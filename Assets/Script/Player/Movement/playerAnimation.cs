@@ -48,6 +48,9 @@ public class playerAnimation : MonoBehaviour
         
         inputActions.Player.Block.performed += ctx => animator.SetBool("Block",true);
         inputActions.Player.Block.canceled += ctx => animator.SetBool("Block",false);
+
+        inputActions.Player.UpAim.performed += ctx => ChangeAttackPosition_Up();
+        inputActions.Player.DownAim.performed += ctx => ChangeAttackPosition_Down();
     }
 
     void PerformAttack(){
@@ -119,6 +122,25 @@ public class playerAnimation : MonoBehaviour
     {
         animator =GameObject.Find("Paladin WProp J Nordstrom").GetComponent<Animator>();
         playerController_ =GameObject.FindObjectOfType<playerController>();
+    }
+
+    void ChangeAttackPosition_Up(){
+        if(!(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3") 
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition 0"))){
+            if(AimPart !=AttackPlaceHolder.head){
+                AimPart -=1;
+            }
+        }
+    }
+    void ChangeAttackPosition_Down(){
+        if(!(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3") 
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition 0"))){
+            if(AimPart !=AttackPlaceHolder.leg){
+                AimPart +=1;
+            }
+        }
     }
 
     void walk_and_run(){
