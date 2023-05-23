@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class TagChanger : MonoBehaviour
 {
-    //Ok I don't want to change the tag one-by-one so I create this tool to replace the tag when game initalized.
+    public Animator animator;
+    //when Player Attack, clash feature enable.
     void Start()
     {
         ChangeTagAndChildren(this.gameObject, "Player");
+    }
+    void Update(){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3")){
+            ChangeTagAndChildren(this.gameObject, "Player_Attack");
+        }else{
+            ChangeTagAndChildren(this.gameObject, "Player");
+        }
     }
 
     void ChangeTagAndChildren(GameObject obj, string newTag)

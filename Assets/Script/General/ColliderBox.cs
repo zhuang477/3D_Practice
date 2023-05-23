@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class ColliderBox : MonoBehaviour
 {
+    public TagChanger TagManager;
+    public GameObject StateIdentifier;
     public Collider[] head;
     public Collider[] body;
     public Collider[] leg;
 
     public Collider shield;
     public Collider Sword;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update(){
+        if(StateIdentifier.tag =="Player_Attack"){
+            Sword.enabled =true;
+        }else{Sword.enabled =false;}
     }
 }
