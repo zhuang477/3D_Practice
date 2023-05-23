@@ -6,6 +6,8 @@ public class Collision : MonoBehaviour
 {
     //it will extend to head,body and leg later.
     public Collider collid;
+    private bool IsTheAttackOver_Sword =false;
+    private bool IsTheAttackOver_Feet =false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +23,15 @@ public class Collision : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("The sword has collided with " + other.gameObject.name);
+        if((other.name =="Sword_" && IsTheAttackOver_Sword ==false) || (other.name =="LeftFoot_" && IsTheAttackOver_Feet ==false)
+        || (other.name =="RightFoot_" && IsTheAttackOver_Feet ==false)){
+            IsTheAttackOver_Sword =true;
+            IsTheAttackOver_Feet =true;
+        }
+    }
+
+    void OnTriggerExit(Collider other){
+        IsTheAttackOver_Sword =false;
+        IsTheAttackOver_Feet =false;
     }
 }

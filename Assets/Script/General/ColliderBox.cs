@@ -12,6 +12,7 @@ public class ColliderBox : MonoBehaviour
 
     public Collider shield;
     public Collider Sword;
+    public Collider[] Feet;
 
     // Update is called once per frame
     void Update(){
