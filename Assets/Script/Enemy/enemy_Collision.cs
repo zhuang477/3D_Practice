@@ -25,6 +25,7 @@ public class Collision : MonoBehaviour
     {
         if((other.name =="Sword_" && IsTheAttackOver_Sword ==false) || (other.name =="LeftFoot_" && IsTheAttackOver_Feet ==false)
         || (other.name =="RightFoot_" && IsTheAttackOver_Feet ==false)){
+            //Debug.Log("x");
             IsTheAttackOver_Sword =true;
             IsTheAttackOver_Feet =true;
         }
