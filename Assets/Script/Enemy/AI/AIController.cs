@@ -24,6 +24,6 @@ public class AIController : MonoBehaviour
     }
 
     void FixedUpdate(){
-        statemachine.CurrState.Update();
+        statemachine.CurrState.FixedUpdate();
     }
 }

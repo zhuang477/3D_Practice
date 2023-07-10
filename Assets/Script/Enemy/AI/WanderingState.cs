@@ -18,24 +18,25 @@ public class WanderingState : State
 
     public override void Enter(){
         base.Enter();
-        //the gameobject is from State.cs, the line
-        // gameobject =go;
-        //moving = gameobject.GetComponent<PawnMoving>();
         timer =0f;
         direction =GetRandomDirection();
     }
 
     public override void Update(){
         base.Update();
-        timer += Time.deltaTime;
-
-        if (timer >= 4f)
-        {
-            direction = GetRandomDirection();
-            timer = 0f;
+        //Debug.Log(gameobject.GetComponent<Enemy_detect>().player_detect);
+        if(!(gameobject.GetComponent<Enemy_detect>().player_detect)){
+            timer += Time.deltaTime;
+            if (timer >= 4f)
+            {
+                direction = GetRandomDirection();
+                timer = 0f;
+            }
+            gameobject.transform.Translate(direction * moveSpeed * Time.deltaTime);
         }
-
-        gameobject.transform.Translate(direction * moveSpeed * Time.deltaTime);
+        else{
+            statemachine.CurrState =new ChasingState(gameobject, statemachine);
+        }
     }
 
     public override void FixedUpdate(){
