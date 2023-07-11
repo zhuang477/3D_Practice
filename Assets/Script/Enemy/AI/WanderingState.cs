@@ -24,17 +24,29 @@ public class WanderingState : State
 
     public override void Update(){
         base.Update();
-        //Debug.Log(gameobject.GetComponent<Enemy_detect>().player_detect);
-        if(!(gameobject.GetComponent<Enemy_detect>().player_detect)){
+        Animator animator = gameobject.GetComponent<Animator>();
+        
+        //if player is not inside the detect range
+        //or if the player is inside the detect range but no line of sight between two.
+        //Then the pawn will wandering
+        if(!(gameobject.GetComponent<Enemy_detect>().player_detect)
+        || (gameobject.GetComponent<Enemy_detect>().player_detect && 
+        gameobject.GetComponent<Enemy_detect>().HasLineOfSight() ==false)){
+            
+            animator.SetBool("Run",false);
             timer += Time.deltaTime;
             if (timer >= 4f)
             {
                 direction = GetRandomDirection();
                 timer = 0f;
             }
-            gameobject.transform.Translate(direction * moveSpeed * Time.deltaTime);
+            CharacterController controller = gameobject.GetComponent<CharacterController>();
+            Vector3 movement = gameobject.transform.forward * moveSpeed * Time.deltaTime;
+            controller.Move(movement);
         }
         else{
+            //if player is inside detect range and there is line of sight.
+            //Then the pawn is chage into chasing state.
             statemachine.CurrState =new ChasingState(gameobject, statemachine);
         }
     }
