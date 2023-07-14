@@ -31,21 +31,26 @@ public class ChasingState : State
         //there seems a problem about raytracing that if using raytracing to determine state
         //then the state will jump back and fourth between wandering and chasing.
         //I will put down this issue now since this is not quite important.
+
+        //if the player is running away and run out of the detect range.
         if(!(gameobject.GetComponent<Enemy_detect>().player_detect)){
             //disable the running animation is in the wandering state.
             statemachine.CurrState =new WanderingState(gameobject, statemachine);
+
+        //if the player is in the detect range.
         }else{
             CharacterController controller = gameobject.GetComponent<CharacterController>();
             Vector3 movement = gameobject.transform.forward * moveSpeed * Time.deltaTime;
-            //if the distance between the two is not close enough, then 
-            //the pawn will chase player (and using run animation).
-            if(distance <3.00f){
+
+            //if the distance is close enough, then the pawn will get into attack state.
+            if(distance <7.00f){
                 statemachine.CurrState =new AttackState(gameobject, statemachine);
             }else{
+            //if the range is not close enough to attack, then 
+            //the pawn will keep chasing player.
                 controller.Move(movement);
                 animator.SetBool("Run",true);
             }
-            //if the distance is close enough, then change into attack state.
         }
     }
     public override void FixedUpdate(){

@@ -17,36 +17,38 @@ public class AttackState : State
     public override void Update()
     {
         base.Update();
+        AttackPart();
         Animator animator = gameobject.GetComponent<Animator>();
         Vector3 playerPosition = gameobject.GetComponent<Enemy_detect>().player_loc_update;
-        float PartAttackDetermine = Random.Range(0f, 3f);
 
         //Calculate the distance between player and pawn.
         float distance = Vector3.Distance(playerPosition, gameobject.transform.position);
 
-        //if the player is fleeing far enough, then the pawn will back to wandering state.
-        if(distance> 3.00f){
+        //if the player is fleeing (but not far enough),then the pawn will chase player.
+        if(distance> 7.00f){
+            animator.SetBool("CloseCombat",false);
+            animator.SetBool("SprintAttack",false);
             statemachine.CurrState =new ChasingState(gameobject, statemachine);
         }
         //if the player stay in the range, then the combat begin.
         else{
-            //if the distance is too far,then the pawn will use sprint attack.
-            //this part seems can become a independent script, will do it later.
-            if(distance >2.00f){
-                animator.SetBool("Sprint",true);
-                if(PartAttackDetermine <1f){
-                    animator.SetBool("AttackHead",true);
-                }
-                if(PartAttackDetermine >2f){
-                    animator.SetBool("AttackLeg",true);
-                }else{
-                    animator.SetBool("AttackBody",true);
-                }
+            animator.SetBool("CloseCombat",true);
+            //using the sprint to quickly approach player between distance 3~10.
+            if(distance <7.00f && distance >3.0f){
+                animator.SetBool("SprintAttack",true);
+                animator.SetInteger("AttackWhere",AttackPart());
             }
-            else{
-                animator.SetBool("Sprint",false);
+            //the pawn and player is close enough to directly start the fight.
+            if(distance <3.00f){
+                animator.SetBool("SprintAttack",false);
             }
         }
+
+    }
+
+    int AttackPart(){
+        int PartAttackDetermine =Random.Range(0, 3);
+        return PartAttackDetermine;
     }
 
     public override void FixedUpdate()
