@@ -12,6 +12,10 @@ public class Enemy_AttackSetting : MonoBehaviour
     }
 
     public float basic_damage =40;
+
+    //it is in the sword object, use to detect player's sword.
+    public Enemy_Clash clash;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +26,14 @@ public class Enemy_AttackSetting : MonoBehaviour
     void Update()
     {
         Animator animator = GetComponent<Animator>();
+        if(animator.GetBool("AttackHead") ==true){
+            basic_damage *=1.5f;
+        }
         if(animator.GetBool("AttackLeg") ==true){
             basic_damage *=0.75f;
+        }
+        if(clash.gettingClash ==true){
+            animator.SetTrigger("GotClash");
         }
     }
 }

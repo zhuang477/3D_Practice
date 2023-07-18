@@ -14,7 +14,12 @@ public class Enemy_TagChanger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("CombatHead") || animator.GetCurrentAnimatorStateInfo(0).IsName("SprintHeadAttack")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("SprintBodyAttack") || animator.GetCurrentAnimatorStateInfo(0).IsName("SprintLegAttack")){
+            ChangeTagAndChildren(this.gameObject, "Enemy_Attack");
+        }else{
+            ChangeTagAndChildren(this.gameObject, "Enemy");
+        }
     }
 
     void ChangeTagAndChildren(GameObject obj, string newTag)

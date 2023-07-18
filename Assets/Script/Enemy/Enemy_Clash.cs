@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy_Clash : MonoBehaviour
+{
+    float startTime =0f;
+    float DurationTime =0.1f;
+    public bool gettingClash =false;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(gettingClash ==true){
+            if (startTime == 0f){
+                startTime = Time.time;
+            }
+            float elapsedTime = Time.time - startTime;
+
+            // Check if the timer has reached the duration
+            if (elapsedTime >= DurationTime){
+                // Reset the timer and set ReceiveDamage to false
+                startTime = 0f;
+                gettingClash = false;
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider other){
+        //Debug.Log(other.gameObject.name);
+        if(other.gameObject.name =="Sword_"){
+            if(gettingClash ==false){
+                gettingClash =true;
+            }
+        }
+    }
+}
