@@ -31,6 +31,8 @@ public class AttackState : State
             statemachine.CurrState =new ChasingState(gameobject, statemachine);
         }
         //if the player stay in the range, then the combat begin.
+        //So the pawn's attack direction is depends on the last chasing state frame's direction. With the increased of the attack animation playing,
+        //the direction will deviated more.
         else{
             animator.SetBool("CloseCombat",true);
             //using the sprint to quickly approach player between distance 3~10.
@@ -43,7 +45,9 @@ public class AttackState : State
                 animator.SetBool("SprintAttack",false);
             }
         }
-
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("AttackSteady")){
+            gameobject.transform.LookAt(playerPosition);
+        }
     }
 
     int AttackPart(){

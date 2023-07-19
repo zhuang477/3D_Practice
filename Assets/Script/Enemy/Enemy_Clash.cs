@@ -33,7 +33,7 @@ public class Enemy_Clash : MonoBehaviour
 
     void OnTriggerEnter(Collider other){
         //Debug.Log(other.gameObject.name);
-        if(other.gameObject.name =="Sword_"){
+        if(other.gameObject.name =="SwordCollider"){
             if(gettingClash ==false){
                 gettingClash =true;
             }
