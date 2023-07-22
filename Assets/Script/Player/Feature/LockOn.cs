@@ -11,8 +11,7 @@ public class LockOn : MonoBehaviour
 
     //--------------Camera----------------------
     public CinemachineFreeLook PlayerCamera;
-    public CinemachineFreeLook LockTargetCamera;
-    public CinemachineMixingCamera mixingCamera;
+    public CinemachineVirtualCamera LockTargetCamera;
     //------------------------------------------
     private bool IsLockEnabled =false;
     private bool ExistATargetNow =false;
@@ -41,13 +40,6 @@ public class LockOn : MonoBehaviour
     //store the distance for each elements in hashset.
     private Dictionary<Transform, float> targetDistances = new Dictionary<Transform, float>();
 
-    public float playerCameraXAxisSpeed,playerCameraYAxisSpeed;
-
-    void Start(){
-        playerCameraXAxisSpeed =PlayerCamera.m_XAxis.m_MaxSpeed;
-        playerCameraYAxisSpeed =PlayerCamera.m_YAxis.m_MaxSpeed;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -63,7 +55,9 @@ public class LockOn : MonoBehaviour
 
         //lock on feature.
         if(IsLockEnabled ==true){
+            PlayerCamera.enabled =false;
             LockTargetCamera.enabled =true;
+
             animator.SetBool("LockTarget",true);
             //if this is the first time lock target.
             if(ExistATargetNow ==false){
@@ -86,11 +80,7 @@ public class LockOn : MonoBehaviour
                 }
             }
             LockTargetCamera.Follow =PlayerLoc;
-            LockTargetCamera.LookAt =currentlyLockedTarget;
-
-            PlayerCamera.m_XAxis.m_MaxSpeed =0;
-            PlayerCamera.m_YAxis.m_MaxSpeed =0;
-
+            LockTargetCamera.LookAt =PlayerLoc;
 
             //if player is moving.
             if(animator.GetBool("IsWalking") || animator.GetBool("IsRunning")){
@@ -114,13 +104,12 @@ public class LockOn : MonoBehaviour
         }
         if(IsLockEnabled ==false){
             animator.SetBool("LockTarget",false);
-            PlayerCamera.m_XAxis.m_MaxSpeed =playerCameraXAxisSpeed;
-            PlayerCamera.m_YAxis.m_MaxSpeed =playerCameraYAxisSpeed;
             LockTargetCamera.Follow =null;
             LockTargetCamera.LookAt =null;
-            LockTargetCamera.enabled =false;
 
+            LockTargetCamera.enabled =false;
             PlayerCamera.enabled =true;
+
             ExistATargetNow =false;
         }
         //
