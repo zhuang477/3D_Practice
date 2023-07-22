@@ -22,6 +22,9 @@ public class playerController : MonoBehaviour
     [HideInInspector] public bool Moveinput = false;
     [HideInInspector] public Vector3 moveDirection;
 
+    //for the lock-on system.
+    public Animator animator;
+
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -31,25 +34,6 @@ public class playerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //-----------------Old Input System, out of date------------------
-        //horizontal = Input.GetAxisRaw("Horizontal");
-        //vertical = Input.GetAxisRaw("Vertical");
-        /**
-        Vector3 direction = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
-        
-        if(direction.magnitude >= 0.1f){
-            float targetAngle =Mathf.Atan2(direction.x ,direction.z) *Mathf.Rad2Deg +cam.eulerAngles.y;
-            float angle =Mathf.SmoothDampAngle(transform.eulerAngles.y,targetAngle,ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation =Quaternion.Euler(0f, angle, 0f);
-            moveDirection =Quaternion.Euler(0f, targetAngle, 0f) *Vector3.forward;
-            controller.Move(moveDirection.normalized*defaultSpeed*Time.deltaTime);
-            Moveinput = true;
-        }
-        else{
-            Moveinput = false;
-        }**/
-        //----------------------------------------------------------------
-
         if (moveInput != Vector2.zero){
             Vector3 direction = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
             float targetAngle =Mathf.Atan2(direction.x ,direction.z) *Mathf.Rad2Deg +cam.eulerAngles.y;

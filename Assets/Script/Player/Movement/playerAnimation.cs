@@ -24,12 +24,6 @@ public class playerAnimation : MonoBehaviour
     //------------------------------------------------------------------------------------------------//
     public New_PlayerController inputActions;
 
-    /**
-    private int comboCounter =0;
-    private float lastComboTime =0f;
-    private float comboResetTime =1f;**/
-    
-
     private void OnEnable(){
         inputActions.Player.Enable();
     }
@@ -60,11 +54,9 @@ public class playerAnimation : MonoBehaviour
             animator.SetTrigger("Attack 1");
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition")){
-            //animator.SetBool("AnimationIsDone",true);
             animator.SetTrigger("Attack 2");
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition 0")){
-            //animator.SetBool("AnimationIsDone",true);
             animator.SetTrigger("Attack 3");
         }
     }
