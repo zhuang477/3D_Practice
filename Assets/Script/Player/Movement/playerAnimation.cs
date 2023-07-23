@@ -79,13 +79,6 @@ public class playerAnimation : MonoBehaviour
     }
 
     void Dodge(){
-        /**
-        if(Input.GetKeyDown(KeyCode.Space)){
-            Quaternion rotation = Quaternion.LookRotation(playerController_.moveDirection);
-            float rotationSpeed = 10f;
-            playerModel.transform.rotation =Quaternion.Slerp(playerModel.transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-            animator.SetTrigger("Dodge");
-        }**/
         animator.SetTrigger("Dodge");
     }
 
@@ -165,9 +158,50 @@ public class playerAnimation : MonoBehaviour
             else{
                 animator.SetBool("IsWalking", true);
             }
+            if(animator.GetBool("LockTarget") ==true){
+                
+            }
+            if(animator.GetBool("LockTarget") ==false){
+
+            }
         }else{
             animator.SetBool("IsWalking", false);
             animator.SetBool("IsRunning", false);
+        }
+
+        //animation set for lock-on system.
+        if(animator.GetBool("IsWalking") ==true){
+            if(animator.GetBool("LockTarget") ==true){
+                if(Input.GetKeyDown("w")){
+                    animator.SetBool("Up_Strafe",true);
+                    animator.SetBool("Down_Strafe",false);
+                    animator.SetBool("Left_Strafe",false);
+                    animator.SetBool("Right_Strafe",false);
+                }
+                if(Input.GetKeyDown("a")){
+                    animator.SetBool("Up_Strafe",false);
+                    animator.SetBool("Down_Strafe",false);
+                    animator.SetBool("Left_Strafe",true);
+                    animator.SetBool("Right_Strafe",false);
+                }
+                if(Input.GetKeyDown("s")){
+                    animator.SetBool("Up_Strafe",false);
+                    animator.SetBool("Down_Strafe",true);
+                    animator.SetBool("Left_Strafe",false);
+                    animator.SetBool("Right_Strafe",false);
+                }
+                if(Input.GetKeyDown("d")){
+                    animator.SetBool("Up_Strafe",true);
+                    animator.SetBool("Down_Strafe",false);
+                    animator.SetBool("Left_Strafe",false);
+                    animator.SetBool("Right_Strafe",true);
+                }
+            }else{
+                animator.SetBool("Up_Strafe",false);
+                animator.SetBool("Down_Strafe",false);
+                animator.SetBool("Left_Strafe",false);
+                animator.SetBool("Right_Strafe",false);
+            }
         }
     }
 
@@ -179,8 +213,8 @@ public class playerAnimation : MonoBehaviour
             animator.ResetTrigger("Attack 3");
             playerController_.defaultSpeed =0f;
         }
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Block_Move")){
-
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk") || animator.GetCurrentAnimatorStateInfo(0).IsName("Block_Move")
+        || (animator.GetBool("IsWalking") && (animator.GetBool("Up_Strafe") || animator.GetBool("Down_Strafe") ||animator.GetBool("Left_Strafe") ||animator.GetBool("Right_Strafe") ) )){
             playerController_.defaultSpeed =6f;
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Sprint")){
