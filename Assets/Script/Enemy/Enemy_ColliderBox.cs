@@ -18,6 +18,12 @@ public class Enemy_ColliderBox : MonoBehaviour
     {
         if(StateIdentifier.tag =="Enemy_Attack"){
             Sword.enabled =true;
-        }else{Sword.enabled =false;}
+            Feet[0].enabled =true;
+            Feet[1].enabled =true;
+        }else{
+            Sword.enabled =false;
+            Feet[0].enabled =false;
+            Feet[1].enabled =false;
+            }
     }
 }

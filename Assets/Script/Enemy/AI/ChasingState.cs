@@ -42,8 +42,9 @@ public class ChasingState : State
             CharacterController controller = gameobject.GetComponent<CharacterController>();
             Vector3 movement = gameobject.transform.forward * moveSpeed * Time.deltaTime;
 
-            //if the distance is close enough, then the pawn will get into attack state.
+            //if the distance is close enough(if the distance is smaller than 7), then the pawn will get into attack state.
             if(distance <7.00f){
+                animator.SetBool("CloseCombat",true);
                 statemachine.CurrState =new AttackState(gameobject, statemachine);
             }else{
             //if the range is not close enough to attack, then 

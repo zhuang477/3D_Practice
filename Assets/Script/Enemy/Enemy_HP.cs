@@ -4,33 +4,13 @@ using UnityEngine;
 
 public class Enemy_HP : MonoBehaviour
 {
-    public int Health;
     public Rigidbody rb;
     private bool ReceiveDamage =false;
 
     public Enemy_ColliderBox colliderList;
 
-    /*
     void Start(){
-        foreach(Collider collider in colliderList.head){
-            if (collider.GetComponent<Child_CollideMessage>() == null)
-            {
-                collider.gameObject.AddComponent<Child_CollideMessage>();
-            }
-        }
-        foreach(Collider collider in colliderList.body){
-            if (collider.GetComponent<Child_CollideMessage>() == null)
-            {
-                collider.gameObject.AddComponent<Child_CollideMessage>();
-            }
-        }
-        foreach(Collider collider in colliderList.leg){
-            if (collider.GetComponent<Child_CollideMessage>() == null)
-            {
-                collider.gameObject.AddComponent<Child_CollideMessage>();
-            }
-        }
-    }*/
+    }
 
     float startTime =0f;
     float DurationTime =0.5f;

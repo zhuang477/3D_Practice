@@ -191,7 +191,7 @@ public class playerAnimation : MonoBehaviour
                     animator.SetBool("Right_Strafe",false);
                 }
                 if(Input.GetKeyDown("d")){
-                    animator.SetBool("Up_Strafe",true);
+                    animator.SetBool("Up_Strafe",false);
                     animator.SetBool("Down_Strafe",false);
                     animator.SetBool("Left_Strafe",false);
                     animator.SetBool("Right_Strafe",true);

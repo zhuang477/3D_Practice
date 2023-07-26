@@ -17,7 +17,9 @@ public class Enemy_detect : MonoBehaviour
 
     void OnTriggerStay(Collider other){
         if(other.gameObject.tag =="Player" || other.gameObject.tag =="Player_Attack"){
-            player_loc_update =other.transform.position;
+            if(other.transform.Find("EnemyFocusPoint")){
+                player_loc_update =other.transform.Find("EnemyFocusPoint").position;
+            }
 
         }
     }

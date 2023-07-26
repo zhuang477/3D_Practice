@@ -11,12 +11,6 @@ public class AIController : MonoBehaviour
         statemachine.CurrState =new WanderingState(gameObject, statemachine);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
