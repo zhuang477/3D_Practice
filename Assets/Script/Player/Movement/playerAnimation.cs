@@ -78,6 +78,12 @@ public class playerAnimation : MonoBehaviour
         }
     }
 
+    void BeingHitInputLock(){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Impact") ||animator.GetCurrentAnimatorStateInfo(0).IsName("Block_Impact")){
+            playerController_.InputActions.Player.Disable();
+        }
+    }
+
     void Dodge(){
         animator.SetTrigger("Dodge");
     }
@@ -252,6 +258,7 @@ public class playerAnimation : MonoBehaviour
         SpeedManager();
         AimPartManager();
         AttackOversee();
+        BeingHitInputLock();
         //Debug.Log(playerController_.defaultSpeed);
         //CurrentAnimationClip();
     }

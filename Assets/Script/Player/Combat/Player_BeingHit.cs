@@ -8,10 +8,11 @@ public class Player_BeingHit : MonoBehaviour
     public Rigidbody rb;
     private bool ReceiveDamage =false;
     public ColliderBox colliderbox;
+    public Animator animator;
+    public LockOn lockon;
     float startTime =0f;
-
     //maybe longer?
-    float DurationTime =0.5f;
+    float DurationTime =0.8f;
 
     void Start(){
         // Get all the ChildCollisionDetect scripts in the children of this GameObject
@@ -23,18 +24,40 @@ public class Player_BeingHit : MonoBehaviour
             childScript.collisionHappened.AddListener(HandleChildCollision);
         }
     }
-
+    
     void HandleChildCollision(string childName){
         if(ReceiveDamage ==false){
-            if(colliderbox.headName.Contains(childName)){
+
+            if(colliderbox.shield.name ==childName){
+                //Debug.Log("Block");
+                if(animator.GetBool("LockTarget") ==false){
+                    lockon.gameObject.transform.LookAt(lockon.currentlyLockedTarget);
+                }
+                animator.SetTrigger("Block_Hit");
+
+            }
+            else if(colliderbox.headName.Contains(childName)){
                 //Debug.Log("head");
+                if(animator.GetBool("LockTarget") ==false){
+                    lockon.gameObject.transform.LookAt(lockon.currentlyLockedTarget);
+                }
+                animator.SetTrigger("GetHit");
             }
-            if(colliderbox.bodyName.Contains(childName)){
+            else if(colliderbox.bodyName.Contains(childName)){
                 //Debug.Log("body");
+                if(animator.GetBool("LockTarget") ==false){
+                    lockon.gameObject.transform.LookAt(lockon.currentlyLockedTarget);
+                }
+                animator.SetTrigger("GetHit");
             }
-            if(colliderbox.legName.Contains(childName)){
+            else if(colliderbox.legName.Contains(childName)){
                 //Debug.Log("leg");
+                if(animator.GetBool("LockTarget") ==false){
+                    lockon.gameObject.transform.LookAt(lockon.currentlyLockedTarget);
+                }
+                animator.SetTrigger("GetHit");
             }
+
             rb.detectCollisions =false;
             ReceiveDamage =true;
         }

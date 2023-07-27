@@ -20,6 +20,11 @@ public class AttackState : State
         Animator animator = gameobject.GetComponent<Animator>();
         Vector3 playerPosition = gameobject.GetComponent<Enemy_detect>().player_loc_update;
         Enemy_Setting setting = gameobject.GetComponent<Enemy_Setting>();
+        Enemy_ColliderBox colliderBox =gameobject.GetComponent<Enemy_ColliderBox>();
+
+        //
+        Enemy_Clash addon_Attack =gameobject.GetComponentInChildren<Enemy_Clash>();
+        addon_Attack.NotShield.AddListener(Addon_Attack_Animation);
 
         //Calculate the distance between player and pawn.
         float distance = Vector3.Distance(playerPosition, gameobject.transform.position);
@@ -55,6 +60,9 @@ public class AttackState : State
                         animator.SetTrigger("KeepBack");
                         //cost stanima...
 
+                        //if player got hit, then add a attack to suppress the player.
+                        //see the Addon_Attack_Animation()
+
                     }
 
                     //if the player not aggressively,then keep the distance till stanima cover.
@@ -83,6 +91,11 @@ public class AttackState : State
                 animator.SetBool("GetClose",true);
             }
         }
+    }
+
+    void Addon_Attack_Animation(){
+        Animator animator = gameobject.GetComponent<Animator>();
+        animator.SetTrigger("Counter");
     }
 
     public override void FixedUpdate()

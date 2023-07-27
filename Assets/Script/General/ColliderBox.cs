@@ -48,6 +48,10 @@ public class ColliderBox : MonoBehaviour
             collider.gameObject.AddComponent<ChildCollisionDetect>();
             legName.Add(collider.gameObject.name);
         }
+
+        //for shield detect
+        shield.isTrigger =true;
+        shield.gameObject.AddComponent<ChildCollisionDetect>();
     }
     // Update is called once per frame
     void Update(){

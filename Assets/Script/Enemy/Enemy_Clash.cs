@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Enemy_Clash : MonoBehaviour
 {
     float startTime =0f;
     float DurationTime =0.1f;
     public bool gettingClash =false;
+    public string enemytype;
+
+    //event for attacK AI
+    public UnityEvent NotShield =new UnityEvent();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +43,9 @@ public class Enemy_Clash : MonoBehaviour
             if(gettingClash ==false){
                 gettingClash =true;
             }
+        }
+        if(other.gameObject.name =="Shield_"){
+            NotShield.Invoke();
         }
     }
 }

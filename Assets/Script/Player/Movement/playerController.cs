@@ -22,9 +22,6 @@ public class playerController : MonoBehaviour
     [HideInInspector] public bool Moveinput = false;
     [HideInInspector] public Vector3 moveDirection;
 
-    //for the lock-on system.
-    public Animator animator;
-
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
