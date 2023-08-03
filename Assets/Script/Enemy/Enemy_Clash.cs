@@ -9,6 +9,7 @@ public class Enemy_Clash : MonoBehaviour
     float DurationTime =0.1f;
     public bool gettingClash =false;
     public string enemytype;
+    public Animator animator;
 
     //event for attacK AI
     public UnityEvent NotShield =new UnityEvent();
@@ -44,8 +45,10 @@ public class Enemy_Clash : MonoBehaviour
                 gettingClash =true;
             }
         }
-        if(other.gameObject.name =="Shield_"){
-            NotShield.Invoke();
+        if(other.transform.root.name=="Player" &&  
+        other.transform.IsChildOf(other.transform.root.GetChild(0).GetChild(0))&& 
+        other.gameObject.name !="Shield_"){
+            animator.SetBool("Counter",true);
         }
     }
 }
