@@ -475,7 +475,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545255916}
-  - component: {fileID: 545255915}
+  - component: {fileID: 545255917}
   m_Layer: 0
   m_Name: GreatSword_Enemy
   m_TagString: Untagged
@@ -483,19 +483,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &545255915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 545255914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be3611236a97650499a5b9eacb5afb23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 5866666021029595501}
 --- !u!4 &545255916
 Transform:
   m_ObjectHideFlags: 0
@@ -512,6 +499,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &545255917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545255914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d1d44533367c84a9576be196077623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5866666021029595501}
+  inital_tag: Enemy
+  attack_tag: Enemy_Attack
 --- !u!1 &547958363
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,8 +1927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee84166c3b3522f49997b1ad3a6bacad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TagManager: {fileID: 114100003438820072}
+  TagManager: {fileID: 4532251263733949}
   StateIdentifier: {fileID: 1253087414921044}
+  attack_tag: Player_Attack
   head:
   - {fileID: 7442015437321796143}
   body:
@@ -2301,7 +2304,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4532251263733948}
-  - component: {fileID: 114100003438820072}
+  - component: {fileID: 4532251263733949}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2326,6 +2329,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4532251263733949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253087414921044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d1d44533367c84a9576be196077623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5866666019950822619}
+  inital_tag: Player
+  attack_tag: Player_Attack
 --- !u!1 &9171099540240901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2375,19 +2393,6 @@ Transform:
   m_Father: {fileID: 5901452233714617378}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114100003438820072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1253087414921044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282aa6493b44ff84f88fd0e715b5f476, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 5866666019950822619}
 --- !u!1 &152878826648188602
 GameObject:
   m_ObjectHideFlags: 0
@@ -2959,7 +2964,6 @@ GameObject:
   - component: {fileID: 5866666019950822619}
   - component: {fileID: 2093398349}
   - component: {fileID: 5866666019950822620}
-  - component: {fileID: 5866666019950822621}
   - component: {fileID: 5866666019950822622}
   - component: {fileID: 5866666019950822623}
   - component: {fileID: 5866666019950822624}
@@ -2983,13 +2987,14 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652683997975}
   - component: {fileID: 5866666021029595501}
+  - component: {fileID: 5866666021029595511}
   - component: {fileID: 5866666021029595502}
   - component: {fileID: 5866666021029595504}
   - component: {fileID: 5866666021029595505}
-  - component: {fileID: 5866666021029595509}
   - component: {fileID: 5866666021029595506}
   - component: {fileID: 5866666021029595507}
   - component: {fileID: 5866666021029595510}
+  - component: {fileID: 5866666021029595512}
   m_Layer: 0
   m_Name: Maria WProp J J Ong
   m_TagString: Untagged
@@ -3208,7 +3213,6 @@ GameObject:
   - component: {fileID: 5465940247401558916}
   - component: {fileID: 5465940247401558918}
   - component: {fileID: 5465940247401558917}
-  - component: {fileID: 5465940247401558919}
   m_Layer: 0
   m_Name: mixamorig:Hips
   m_TagString: Untagged
@@ -6176,19 +6180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5465940247401558917}
-  colliderList: {fileID: 5866666021029595509}
---- !u!114 &5465940247401558919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1082271957698652918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77bd1bc3fd8b04c40bdde129980a2b01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  colliderList: {fileID: 5866666021029595512}
 --- !u!4 &5477181764930927142
 Transform:
   m_ObjectHideFlags: 0
@@ -6545,19 +6537,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimationDone: 1
---- !u!114 &5866666019950822621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147892847643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c27e95233e7e6d44eb147bc4acbecef2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 5866666019950822619}
 --- !u!114 &5866666019950822622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6850,7 +6829,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 20
   m_Center: {x: 0, y: 1.0954742, z: 0}
---- !u!114 &5866666021029595509
+--- !u!114 &5866666021029595510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6859,11 +6838,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 919132148963690925}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cecf01d4f08040542b993104ae270a71, type: 3}
+  m_Script: {fileID: 11500000, guid: 7729663bb01b7e04b94de03631786995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TagManager: {fileID: 545255915}
+  basic_damage: 40
+  stamina: 20
+  health: 0
+  clash: {fileID: 443576955}
+--- !u!114 &5866666021029595511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148963690925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94a08be95b16e8c4a982586294e0f334, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5866666021029595501}
+--- !u!114 &5866666021029595512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148963690925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee84166c3b3522f49997b1ad3a6bacad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TagManager: {fileID: 545255917}
   StateIdentifier: {fileID: 545255914}
+  attack_tag: Enemy_Attack
   head:
   - {fileID: 1470361335}
   - {fileID: 576646928}
@@ -6894,22 +6903,9 @@ MonoBehaviour:
   Feet:
   - {fileID: 7138560356968722505}
   - {fileID: 8471895809741978736}
---- !u!114 &5866666021029595510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148963690925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7729663bb01b7e04b94de03631786995, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  basic_damage: 40
-  stamina: 20
-  health: 0
-  clash: {fileID: 443576955}
+  headName: []
+  bodyName: []
+  legName: []
 --- !u!4 &5901452233714617378
 Transform:
   m_ObjectHideFlags: 0

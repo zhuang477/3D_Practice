@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ColliderBox : MonoBehaviour
 {
-    public TagChanger TagManager;
+    public TagChanger_2 TagManager;
     public GameObject StateIdentifier;
+    public string attack_tag;
+
     public Collider[] head;
     public Collider[] body;
     public Collider[] leg;
@@ -55,7 +57,7 @@ public class ColliderBox : MonoBehaviour
     }
     // Update is called once per frame
     void Update(){
-        if(StateIdentifier.tag =="Player_Attack"){
+        if(StateIdentifier.tag ==attack_tag){
             Sword.enabled =true;
             Feet[0].enabled =true;
             Feet[1].enabled =true;

@@ -20,7 +20,7 @@ public class AttackState : State
         Animator animator = gameobject.GetComponent<Animator>();
         Vector3 playerPosition = gameobject.GetComponent<Enemy_detect>().player_loc_update;
         Enemy_Setting setting = gameobject.GetComponent<Enemy_Setting>();
-        Enemy_ColliderBox colliderBox =gameobject.GetComponent<Enemy_ColliderBox>();
+        ColliderBox colliderBox =gameobject.GetComponent<ColliderBox>();
 
         //
         Enemy_Clash addon_Attack =gameobject.GetComponentInChildren<Enemy_Clash>();
@@ -61,7 +61,9 @@ public class AttackState : State
                         //cost stanima...
 
                         //if player got hit, then add a attack to suppress the player.
-                        //see the Addon_Attack_Animation()
+                        //________________________________
+                        //see the Addon_Attack_Animation(), I use an event so the addon attack implement is not in here.
+                        //________________________________
 
                     }
 

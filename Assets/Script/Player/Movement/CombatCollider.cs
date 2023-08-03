@@ -6,7 +6,7 @@ public class CombatCollider : MonoBehaviour
 {
 
     //this script will tag the player is attacking when the user input attack button.
-    public TagChanger TagManager;
+    public TagChanger_2 TagManager;
     
     // Start is called before the first frame update
     void Start()

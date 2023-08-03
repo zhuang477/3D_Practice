@@ -233,21 +233,24 @@ public class playerAnimation : MonoBehaviour
             playerController_.defaultSpeed =0f;
         }
     }
-    
-    //The tool that check which animation is playing. Put it to Update() to use if needed.
-    void CurrentAnimationClip()
-    {
-        // Get the current AnimatorClipInfo.
-        AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
 
-        if (clipInfo.Length > 0)
-        {
-            // Print the name of the currently playing clip.
-            Debug.Log("Currently playing: " + clipInfo[0].clip.name);
+    void IsAttackingDetect(){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 3")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition") || animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition 0")){
+            animator.SetBool("IsAttacking",true);
+        }else{
+            animator.SetBool("IsAttacking",false);
         }
-        else
-        {
-            Debug.Log("No animation is playing.");
+    }
+
+    void NoRootMotion(){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 1") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Attack 2")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition") || animator.GetCurrentAnimatorStateInfo(0).IsName("Combo_Transition 0")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Stance") || animator.GetCurrentAnimatorStateInfo(0).IsName("Male_Sword_Walk")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("Male Sword Sprint")){
+            animator.applyRootMotion =false;
+        }else{
+            animator.applyRootMotion =true;
         }
     }
 
@@ -259,7 +262,7 @@ public class playerAnimation : MonoBehaviour
         AimPartManager();
         AttackOversee();
         BeingHitInputLock();
-        //Debug.Log(playerController_.defaultSpeed);
-        //CurrentAnimationClip();
+        IsAttackingDetect();
+        NoRootMotion();
     }
 }

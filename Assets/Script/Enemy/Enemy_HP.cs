@@ -7,7 +7,7 @@ public class Enemy_HP : MonoBehaviour
     public Rigidbody rb;
     private bool ReceiveDamage =false;
 
-    public Enemy_ColliderBox colliderList;
+    public ColliderBox colliderList;
 
     void Start(){
     }

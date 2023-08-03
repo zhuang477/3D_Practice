@@ -2,29 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_TagChanger : MonoBehaviour
+public class TagChanger_2 : MonoBehaviour
 {
     public Animator animator;
-    private int[] ComboNumbers =new int[10];
-
+    public string inital_tag;
+    public string attack_tag;
+    // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 10; i++){
-            ComboNumbers[i] = i + 1;
-        }
-        ChangeTagAndChildren(this.gameObject, "Enemy");
+        ChangeTagAndChildren(this.gameObject, inital_tag);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(animator.GetBool("KeepBack")){
-            ChangeTagAndChildren(this.gameObject, "Enemy_Attack");
+        if(animator.GetBool("IsAttacking")){
+            ChangeTagAndChildren(this.gameObject, attack_tag);
         }else{
-            ChangeTagAndChildren(this.gameObject, "Enemy");
+            ChangeTagAndChildren(this.gameObject, inital_tag);
         }
     }
-
     void ChangeTagAndChildren(GameObject obj, string newTag)
     {
         obj.tag = newTag;

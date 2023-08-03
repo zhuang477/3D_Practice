@@ -115,7 +115,6 @@ public class LockOn : MonoBehaviour
         //
     }
 
-    //the switch target feature is still needs to develop.
     void OnTriggerEnter(Collider other){
         //the lock on need character controller and a child object called "LockPoint".
         if(other.gameObject.tag =="Enemy" || other.gameObject.tag =="Enemy_Attack"){
