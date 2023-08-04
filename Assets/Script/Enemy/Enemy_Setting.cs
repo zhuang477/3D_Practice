@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy_Setting : MonoBehaviour
 {
     public float basic_damage;
-    public float stamina;
+    public int stamina;
 
     public int health;
 

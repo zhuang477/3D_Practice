@@ -12,7 +12,7 @@ public class Player_BeingHit : MonoBehaviour
     public LockOn lockon;
     float startTime =0f;
     //maybe longer?
-    float DurationTime =0.8f;
+    float DurationTime =0.5f;
 
     void Start(){
         // Get all the ChildCollisionDetect scripts in the children of this GameObject

@@ -14,7 +14,8 @@ public class GS_Animation : MonoBehaviour
 
     void AttackSet(){
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("KeepBack_Down")||animator.GetCurrentAnimatorStateInfo(0).IsName("KeepBack_Mid")||animator.GetCurrentAnimatorStateInfo(0).IsName("KeepBack_Up")
-        ||animator.GetCurrentAnimatorStateInfo(0).IsName("Addon_Attack 0")){
+        ||animator.GetCurrentAnimatorStateInfo(0).IsName("Addon_Attack 0") || animator.GetCurrentAnimatorStateInfo(0).IsName("Addon_Attack 1")
+        || animator.GetCurrentAnimatorStateInfo(0).IsName("MidStanimaAttack")){
             animator.SetBool("IsAttacking",true);
         }
         else{
@@ -23,7 +24,7 @@ public class GS_Animation : MonoBehaviour
     }
 
     void CounterSet(){
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Addon_Attack 0")){
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Addon_Attack 0") || animator.GetCurrentAnimatorStateInfo(0).IsName("Addon_Attack 1")){
             animator.SetBool("Counter",false);
         }
     }
