@@ -6,8 +6,11 @@ using UnityEngine;
 public class Enemy_Setting : MonoBehaviour
 {
     public float basic_damage;
-    public int stamina;
+    public int minimum_stanima;
+    public int maximum_stanima;
+    public float Stanima_RecoveryRate;
 
+    public float stamina;
     public int health;
 
     //it is in the sword object, use to detect player's sword.
@@ -32,5 +35,12 @@ public class Enemy_Setting : MonoBehaviour
         if(clash.gettingClash ==true){
             animator.SetTrigger("GotClash");
         }
+
+        StaminaRecover();
+    }
+    void StaminaRecover()
+    {
+        stamina += Stanima_RecoveryRate * Time.deltaTime;
+        stamina = Mathf.Clamp(stamina, minimum_stanima, maximum_stanima);
     }
 }
