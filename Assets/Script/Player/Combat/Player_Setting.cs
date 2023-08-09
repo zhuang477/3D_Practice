@@ -6,56 +6,59 @@ public class Player_Setting : MonoBehaviour
 {
     public int health;
     public float stamina;
+
+    //it is "stanima" instead of "stamina", mind this.
+    public float minimum__stanima;
+    public float maximum_stanima;
+    public float Stanima_RecoveryRate;
+
+    public float cooldownTime;
+    public float Refreshtime;
+
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        stamina =maximum_stanima;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-/**public class Player_2D_Status : MonoBehaviour
-{
-    public int basic_health =100;
-    public float basic_stamina =100;
-
-    public TMP_Text StaminaShown;
-
-    private float time = 0f;
-    public bool inAction = false;
-
-    // Update is called once per frame
-    void Update()
-    {
-        StaminaShown.text = basic_stamina.ToString();
+        Debug.Log(stamina);
         StaminaRecover();
     }
 
-    public void StaminaRecover()
-    {
-        time += Time.deltaTime;
-
-        if (basic_stamina > 100)
-        {
-            basic_stamina = 100;
+    void StaminaRecover(){
+        Refreshtime += Time.deltaTime;
+        if(animator.GetBool("IsAttacking")){
+            stamina -=0.1f;
         }
-        if(basic_stamina < 0)
-        {
-            basic_stamina = 0;
+        if(animator.GetBool("IsRunning")){
+            stamina -=0.1f;
+        }
+        if(animator.GetBool("Dodge")){
+            stamina -=20f;
         }
 
-        if (basic_stamina < 100 && inAction ==false)
-        {
-            if (time >= 0.2f)
-            {
-                basic_stamina += 2f;
-                time = 0f;
+        if(stamina <maximum_stanima 
+        && !animator.GetBool("IsAttacking")
+        && !animator.GetBool("IsRunning")
+        && !animator.GetBool("Dodge")){
+            if(Refreshtime >= cooldownTime){
+                stamina += Stanima_RecoveryRate;
+                Refreshtime =0f;
             }
         }
-
+        
+        if (stamina > maximum_stanima)
+        {
+            stamina = maximum_stanima;
+        }
+        if(stamina < minimum__stanima)
+        {
+            stamina = minimum__stanima;
+        }
     }
-}**/
 }

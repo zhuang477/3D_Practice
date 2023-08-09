@@ -58,6 +58,12 @@ public class LockOn : MonoBehaviour
             PlayerCamera.enabled =false;
             LockTargetCamera.enabled =true;
 
+            //
+            //Quaternion currentRotation = transform.rotation;
+            //Quaternion limitedRotation = Quaternion.Euler(0f,currentRotation.eulerAngles.y,currentRotation.eulerAngles.z);
+            //gameObject.transform.rotation = limitedRotation;
+            //
+
             animator.SetBool("LockTarget",true);
             //if this is the first time lock target.
             if(ExistATargetNow ==false){

@@ -258,10 +258,10 @@ AnimatorStateMachine:
     m_Position: {x: -80, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8923196011748060948}
-    m_Position: {x: 460, y: -190, z: 0}
+    m_Position: {x: 190, y: -190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6836379672435106167}
-    m_Position: {x: 760, y: -190, z: 0}
+    m_Position: {x: 490, y: -190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4690749744295962791}
     m_Position: {x: -320, y: -10, z: 0}
@@ -270,10 +270,10 @@ AnimatorStateMachine:
     m_Position: {x: 290, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5816999858174114402}
-    m_Position: {x: 610, y: -310, z: 0}
+    m_Position: {x: 340, y: -310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8033812637176499984}
-    m_Position: {x: 610, y: -240, z: 0}
+    m_Position: {x: 340, y: -240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8131692982295498534}
     m_Position: {x: 1320, y: -230, z: 0}
@@ -294,7 +294,7 @@ AnimatorStateMachine:
     m_Position: {x: 290, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3565785090764225874}
-    m_Position: {x: 610, y: -100, z: 0}
+    m_Position: {x: 340, y: -100, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 8706472665242755990}
@@ -353,7 +353,7 @@ AnimatorStateTransition:
     m_EventTreshold: 30
   - m_ConditionMode: 4
     m_ConditionEvent: Distance
-    m_EventTreshold: 6
+    m_EventTreshold: 7
   - m_ConditionMode: 6
     m_ConditionEvent: Strafe
     m_EventTreshold: 0
@@ -707,9 +707,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: Run
-    m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: AttackState
     m_EventTreshold: 0
@@ -759,7 +756,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 3
+    m_ConditionEvent: Distance
+    m_EventTreshold: 4
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8958430052460267640}
   m_Solo: 0
@@ -769,7 +769,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.875
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1035,6 +1035,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 3
     m_ConditionEvent: Stanima
     m_EventTreshold: 60
+  - m_ConditionMode: 4
+    m_ConditionEvent: Distance
+    m_EventTreshold: 7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1235553331575911101}
   m_Solo: 0
@@ -1635,85 +1638,85 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: IsAnimationDone
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AttackState
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Run
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AttackHead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AttackBody
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AttackLeg
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: ShouldAttack
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Counter
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: GotClash
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Stanima
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: AttackWhere
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Strafe
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Distance
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -2128,7 +2131,7 @@ AnimatorStateTransition:
     m_EventTreshold: 30
   - m_ConditionMode: 4
     m_ConditionEvent: Distance
-    m_EventTreshold: 6
+    m_EventTreshold: 7
   - m_ConditionMode: 6
     m_ConditionEvent: Strafe
     m_EventTreshold: 1
@@ -2187,9 +2190,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 4
     m_ConditionEvent: Distance
     m_EventTreshold: 4
-  - m_ConditionMode: 3
-    m_ConditionEvent: Distance
-    m_EventTreshold: 2.5
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8958430052460267640}
   m_Solo: 0
@@ -2516,7 +2516,7 @@ AnimatorStateTransition:
     m_EventTreshold: 30
   - m_ConditionMode: 4
     m_ConditionEvent: Distance
-    m_EventTreshold: 6
+    m_EventTreshold: 7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7263694486927694591}
   m_Solo: 0
@@ -3062,10 +3062,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 7130491815081284913}
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 370, y: -30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1801327238287481180}
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 410, y: 100, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -3167,7 +3167,10 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 3
+    m_ConditionEvent: Distance
+    m_EventTreshold: 4
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8958430052460267640}
   m_Solo: 0
@@ -3177,7 +3180,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.24999988
   m_TransitionOffset: 0
   m_ExitTime: 0.8685979
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1

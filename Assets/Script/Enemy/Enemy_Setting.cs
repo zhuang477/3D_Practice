@@ -6,6 +6,8 @@ using UnityEngine;
 public class Enemy_Setting : MonoBehaviour
 {
     public float basic_damage;
+    
+    //it is "stanima" instead of "stamina", mind this.
     public int minimum_stanima;
     public int maximum_stanima;
     public float Stanima_RecoveryRate;

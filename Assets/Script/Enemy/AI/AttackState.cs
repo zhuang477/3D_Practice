@@ -43,6 +43,7 @@ public class AttackState : State
         }
         //if the distance is smaller or equal than 7
         else{
+            animator.SetBool("Run",false);
             //the whole structure is (0-2.5-4)(4-7)
             //0 -2.5 is the counter distance when the player is too close and the pawn must act(in low~mid stanima).
             gameobject.transform.LookAt(playerPosition);
@@ -121,7 +122,6 @@ public class AttackState : State
                 }
             }
         }
-        Debug.Log(distance);
     }
 
     public override void FixedUpdate()

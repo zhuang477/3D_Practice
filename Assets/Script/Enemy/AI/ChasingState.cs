@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class ChasingState : State
 {
     //
 
     public float moveSpeed =5f;
-
     public ChasingState(GameObject go, StateMachine sm) : base(go, sm){
 
     }
@@ -22,8 +22,8 @@ public class ChasingState : State
         base.Update();
         Animator animator = gameobject.GetComponent<Animator>();
         Vector3 playerPosition = gameobject.GetComponent<Enemy_detect>().player_loc_update;
-        // Rotate the pawn to face the player
-        gameobject.transform.LookAt(playerPosition);
+        Seeker seeker =gameobject.GetComponent<Seeker>();
+        RichAI rai =gameobject.GetComponent<RichAI>();
 
         //Calculate the distance between player and pawn.
         float distance = Vector3.Distance(playerPosition, gameobject.transform.position);
@@ -39,17 +39,18 @@ public class ChasingState : State
 
         //if the player is in the detect range.
         }else{
-            CharacterController controller = gameobject.GetComponent<CharacterController>();
-            Vector3 movement = gameobject.transform.forward * moveSpeed * Time.deltaTime;
+            //Vector3 movement = gameobject.transform.forward * moveSpeed * Time.deltaTime;
 
             //if the distance is close enough(if the distance is smaller than 7), then the pawn will get into attack state.
             if(distance <7.00f){
+                rai.canMove =false;
                 animator.SetBool("AttackState",true);
                 statemachine.CurrState =new AttackState(gameobject, statemachine);
             }else{
             //if the range is not close enough to attack, then 
             //the pawn will keep chasing player.
-                controller.Move(movement);
+                rai.canMove =true;
+                seeker.StartPath(gameobject.transform.position,playerPosition);
                 animator.SetBool("Run",true);
             }
         }
