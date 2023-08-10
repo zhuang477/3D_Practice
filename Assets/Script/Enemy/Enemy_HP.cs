@@ -9,9 +9,6 @@ public class Enemy_HP : MonoBehaviour
 
     public ColliderBox colliderList;
 
-    void Start(){
-    }
-
     float startTime =0f;
     float DurationTime =0.5f;
 

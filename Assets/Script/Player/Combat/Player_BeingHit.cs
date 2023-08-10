@@ -10,9 +10,12 @@ public class Player_BeingHit : MonoBehaviour
     public ColliderBox colliderbox;
     public Animator animator;
     public LockOn lockon;
+
     float startTime =0f;
     //maybe longer?
     float DurationTime =0.5f;
+
+    public CharacterController controller;
 
     void Start(){
         // Get all the ChildCollisionDetect scripts in the children of this GameObject
@@ -77,6 +80,13 @@ public class Player_BeingHit : MonoBehaviour
                 rb.detectCollisions =true;
                 ReceiveDamage = false;
             }
+        }
+        Backward_Impulse();
+    }
+
+    void Backward_Impulse(){
+        if(animator.GetBool("GetHit")){
+            controller.Move(new Vector3(0f,0f,-1f));
         }
     }
 }

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Player_Setting : MonoBehaviour
 {
-    public int health;
+    public int head_health;
+    public int body_health;
+    public int leg_health;
+
     public float stamina;
 
     //it is "stanima" instead of "stamina", mind this.
@@ -13,7 +16,7 @@ public class Player_Setting : MonoBehaviour
     public float Stanima_RecoveryRate;
 
     public float cooldownTime;
-    public float Refreshtime;
+    [HideInInspector]public float Refreshtime;
 
     public Animator animator;
 
@@ -26,7 +29,6 @@ public class Player_Setting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(stamina);
         StaminaRecover();
     }
 
